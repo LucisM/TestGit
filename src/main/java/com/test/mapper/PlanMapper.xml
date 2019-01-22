@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.dao.PlanMapper" >
+  <resultMap id="BaseResultMap" type="com.test.entity.Plan" >
+    <id column="username" property="username" jdbcType="VARCHAR" />
+    <result column="goal" property="goal" jdbcType="VARCHAR" />
+    <result column="days" property="days" jdbcType="INTEGER" />
+    <result column="remind_days" property="remindDays" jdbcType="INTEGER" />
+    <result column="words_number" property="wordsNumber" jdbcType="INTEGER" />
+    <result column="words_finished" property="wordsFinished" jdbcType="INTEGER" />
+    <result column="remind_dayWords" property="remindDaywords" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    username, goal, days, remind_days, words_number, words_finished, remind_dayWords
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from plan
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from plan
+    where username = #{username,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.test.entity.Plan" >
+    insert into plan (username, goal, days, 
+      remind_days, words_number, words_finished, 
+      remind_dayWords)
+    values (#{username,jdbcType=VARCHAR}, #{goal,jdbcType=VARCHAR}, #{days,jdbcType=INTEGER}, 
+      #{remindDays,jdbcType=INTEGER}, #{wordsNumber,jdbcType=INTEGER}, #{wordsFinished,jdbcType=INTEGER}, 
+      #{remindDaywords,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.test.entity.Plan" >
+    insert into plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="goal != null" >
+        goal,
+      </if>
+      <if test="days != null" >
+        days,
+      </if>
+      <if test="remindDays != null" >
+        remind_days,
+      </if>
+      <if test="wordsNumber != null" >
+        words_number,
+      </if>
+      <if test="wordsFinished != null" >
+        words_finished,
+      </if>
+      <if test="remindDaywords != null" >
+        remind_dayWords,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="goal != null" >
+        #{goal,jdbcType=VARCHAR},
+      </if>
+      <if test="days != null" >
+        #{days,jdbcType=INTEGER},
+      </if>
+      <if test="remindDays != null" >
+        #{remindDays,jdbcType=INTEGER},
+      </if>
+      <if test="wordsNumber != null" >
+        #{wordsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="wordsFinished != null" >
+        #{wordsFinished,jdbcType=INTEGER},
+      </if>
+      <if test="remindDaywords != null" >
+        #{remindDaywords,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test.entity.Plan" >
+    update plan
+    <set >
+      <if test="goal != null" >
+        goal = #{goal,jdbcType=VARCHAR},
+      </if>
+      <if test="days != null" >
+        days = #{days,jdbcType=INTEGER},
+      </if>
+      <if test="remindDays != null" >
+        remind_days = #{remindDays,jdbcType=INTEGER},
+      </if>
+      <if test="wordsNumber != null" >
+        words_number = #{wordsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="wordsFinished != null" >
+        words_finished = #{wordsFinished,jdbcType=INTEGER},
+      </if>
+      <if test="remindDaywords != null" >
+        remind_dayWords = #{remindDaywords,jdbcType=INTEGER},
+      </if>
+    </set>
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test.entity.Plan" >
+    update plan
+    set goal = #{goal,jdbcType=VARCHAR},
+      days = #{days,jdbcType=INTEGER},
+      remind_days = #{remindDays,jdbcType=INTEGER},
+      words_number = #{wordsNumber,jdbcType=INTEGER},
+      words_finished = #{wordsFinished,jdbcType=INTEGER},
+      remind_dayWords = #{remindDaywords,jdbcType=INTEGER}
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+</mapper>

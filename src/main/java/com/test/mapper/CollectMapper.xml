@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.dao.CollectMapper" >
+  <resultMap id="BaseResultMap" type="com.test.entity.Collect" >
+    <id column="username" property="username" jdbcType="VARCHAR" />
+    <id column="word" property="word" jdbcType="VARCHAR" />
+    <result column="meaning" property="meaning" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    username, word, meaning
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.test.entity.CollectKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from favorite
+    where username = #{username,jdbcType=VARCHAR}
+      and word = #{word,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.test.entity.CollectKey" >
+    delete from favorite
+    where username = #{username,jdbcType=VARCHAR}
+      and word = #{word,jdbcType=VARCHAR}
+  </delete>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from favorite
+    where username = #{username}
+  </delete>
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from favorite
+    where username =#{username};
+  </select>
+  <insert id="insert" parameterType="com.test.entity.Collect" >
+    insert ignore into favorite (username, word, meaning
+      )
+    values (#{username,jdbcType=VARCHAR}, #{word,jdbcType=VARCHAR}, #{meaning,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.test.entity.Collect" >
+    insert into favorite
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="word != null" >
+        word,
+      </if>
+      <if test="meaning != null" >
+        meaning,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="word != null" >
+        #{word,jdbcType=VARCHAR},
+      </if>
+      <if test="meaning != null" >
+        #{meaning,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test.entity.Collect" >
+    update favorite
+    <set >
+      <if test="meaning != null" >
+        meaning = #{meaning,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where username = #{username,jdbcType=VARCHAR}
+      and word = #{word,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test.entity.Collect" >
+    update favorite
+    set meaning = #{meaning,jdbcType=VARCHAR}
+    where username = #{username,jdbcType=VARCHAR}
+      and word = #{word,jdbcType=VARCHAR}
+  </update>
+</mapper>
